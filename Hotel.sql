@@ -12,7 +12,7 @@ State varchar(30) NOT NULL,
 Country varchar(50) NOT NULL,
 ZIP int NOT NULL,
 Primary Key(HotelID)
-)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+);
 
 DROP TABLE IF EXISTS HotelPhones;
 CREATE TABLE HotelPhones(
@@ -21,7 +21,7 @@ PhoneNumber varchar(12) NOT NULL,
 HotelID int NOT NULL,
 Primary Key(PhoneId, HotelID),
 Foreign Key(HotelID) references Hotel(HotelID)
-)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+);
 
 DROP TABLE IF EXISTS ROOM;
 CREATE TABLE Room(
@@ -37,73 +37,28 @@ EndDate DATE,
 Discount float,
 Primary Key(RoomNumber, HotelID),
 Foreign Key(HotelID) references Hotel(HotelID)
-)ENGINE = InnoDB DEFAULT CHARSET=latin1;
+);
 
 
 DROP TABLE IF EXISTS Breakfast;
 CREATE TABLE Breakfast(
-BreakfastType varchar(50) NOT NULL,
+BreakfastType varchar(50) NOT NULL DEFAULT '0',
 BreakfastDescription varchar(50),
 BreakfastPrice int,
 HotelID int NOT NULL,
 Primary Key(BreakfastType, HotelID),
 Foreign Key(HotelID) references Hotel(HotelID)
-)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+);
 
 
 DROP TABLE IF EXISTS Service;
 CREATE TABLE Service(
-ServiceType varchar(50),
+ServiceType varchar(50) NOT NULL DEFAULT '0',
 ServicePrice int,
 HotelID int NOT NULL,
 Primary Key(ServiceType, HotelID),
 Foreign Key(HotelID) references Hotel(HotelID)
-)ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-DROP TABLE IF EXISTS Includes;
-CREATE TABLE Includes(
-BreakfastType varchar(50) NOT NULL,
-HotelID int NOT NULL,
-InvoiceNumber int NOT NULL,
-Primary Key(BreakfastType, HotelID, InvoiceNumber),
-Foreign Key(InvoiceNumber) references Reservation(InvoiceNumber),
-Foreign Key(BreakfastType, HotelID) references Breakfast(BreakfastType, HotelID)
-)ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS Contains;
-CREATE TABLE Contains(
-ServiceType varchar(50),
-HotelID int NOT NULL,
-InvoiceNumber int NOT NULL,
-Primary Key(ServiceType, HotelID, InvoiceNumber),
-Foreign Key(InvoiceNumber) references Reservation,
-Foreign Key(ServiceType, HotelID) references Service
-)ENGINE=InnoDB DEFAULT CHARSET=latin1; 
-
-DROP TABLE IF EXISTS Reserves;
-CREATE TABLE Reserves(
-OutDate date NOT NULL,
-InDate date NOT NULL,
-NoOfDays int NOT NULL,
-Primary Key(InvoiceNumber, RoomNumber, HotelID),
-Foreign Key(InvoiceNumber) references Reservation,
-Foreign Key (HotelID) references Hotel,
-Foreign Key (RoomNumber) references Room
-)ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-DROP TABLE IF EXISTS Reservation;
-CREATE TABLE Reservation(
-InvoiceNumber int NOT NULL AUTO_INCREMENT,
-ReservationDate DATE NOT NULL,
-TotalAmount float NOT NULL,
-CardNumber varchar(16) NOT NULL,
-CustomerID int NOT NULL,
-Primary Key(InvoiceNumber),
-Foreign Key(CardNumber) references CreditCard,
-Foreign Key(CustomerID) references Customer
-)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+);
 
 DROP TABLE IF EXISTS CreditCard;
 CREATE TABLE CreditCard(
@@ -114,17 +69,63 @@ SecurityCode int NOT NULL,
 Type varchar(20) NOT NULL,
 ExpirationDate DATE NOT NULL,
 Primary Key(CardNumber)
-)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+);
 
 DROP TABLE IF EXISTS Customer;
 CREATE TABLE Customer(
-CustomerID int NOT NULL,
+CustomerID int NOT NULL AUTO_INCREMENT,
 Email varchar(50) NOT NULL,
 Address varchar(50) NOT NULL,
 PhoneNumber varchar(12) NOT NULL,
 Name varchar(25) NOT NULL,
 Primary Key(CustomerID)
-)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+);
+
+DROP TABLE IF EXISTS Reservation;
+CREATE TABLE Reservation(
+InvoiceNumber int NOT NULL AUTO_INCREMENT,
+ReservationDate DATE NOT NULL,
+TotalAmount float NOT NULL,
+CardNumber varchar(16) NOT NULL,
+CustomerID int NOT NULL,
+Primary Key(InvoiceNumber),
+Foreign Key(CardNumber) references CreditCard(CardNumber),
+Foreign Key(CustomerID) references Customer(CustomerID)
+);
+
+DROP TABLE IF EXISTS Reserves;
+CREATE TABLE Reserves(
+OutDate date NOT NULL,
+InDate date NOT NULL,
+NoOfDays int NOT NULL,
+InvoiceNumber int Not NULL,
+RoomNumber int NOT NULL,
+HotelID int NOT NULL,
+Primary Key(InvoiceNumber, RoomNumber, HotelID),
+Foreign Key(InvoiceNumber) references Reservation(InvoiceNumber),
+Foreign Key(RoomNumber, HotelID) references Room(RoomNumber, HotelID)
+);
+
+DROP TABLE IF EXISTS Includes;
+CREATE TABLE Includes(
+BreakfastType varchar(50) NOT NULL,
+HotelID int NOT NULL,
+InvoiceNumber int NOT NULL,
+Primary Key(BreakfastType, HotelID, InvoiceNumber),
+Foreign Key(InvoiceNumber) references Reservation(InvoiceNumber),
+Foreign Key(BreakfastType, HotelID) references Breakfast(BreakfastType, HotelID)
+);
+
+DROP TABLE IF EXISTS `Contains`;
+CREATE TABLE `Contains`(
+ServiceType varchar(50) NOT NULL,
+HotelID int NOT NULL,
+InvoiceNumber int NOT NULL,
+Primary Key(ServiceType, HotelID, InvoiceNumber),
+Foreign Key(InvoiceNumber) references Reservation(InvoiceNumber),
+Foreign Key(ServiceType, HotelID) references Service(ServiceType, HotelID)
+); 
+
 
 DROP TABLE IF EXISTS RoomReview; 
 CREATE TABLE RoomReview(
@@ -136,10 +137,10 @@ TextComment varchar(100),
 CHECK (Rating < 11),
 CHECK (Rating >= 0),
 CustomerID int NOT NULL,
-Foreign Key(CustomerID) references Customer,
 Primary Key(ReviewID, RoomNumber, HotelID),
-Foreign Key(RoomNumber, HotelID) references Room
-)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+Foreign Key(CustomerID) references Customer(CustomerID),
+Foreign Key(RoomNumber, HotelID) references Room(RoomNumber, HotelID)
+);
 
 DROP TABLE IF EXISTS BreakfastReview;
 CREATE TABLE BreakfastReview(
@@ -152,9 +153,9 @@ CHECK (Rating < 11),
 CHECK (Rating >= 0),
 CustomerID int NOT NULL,
 Primary Key(ReviewID, BreakfastType, HotelID),
-Foreign Key(CustomerID) references Customer,
-Foreign Key(BreakfastType, HotelID) references Breakfast
-)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+Foreign Key(CustomerID) references Customer(CustomerID),
+Foreign Key(BreakfastType, HotelID) references Breakfast(BreakfastType, HotelID)
+);
 
 DROP TABLE IF EXISTS ServiceReview;
 CREATE TABLE ServiceReview(
@@ -167,6 +168,6 @@ CHECK (Rating < 11),
 CHECK (Rating >= 0),
 CustomerID int NOT NULL,
 Primary Key(ReviewID, ServiceType, HotelID),
-Foreign Key(CustomerID) references Customer,
-Foreign Key(ServiceType, HotelID) references Breakfast
-)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+Foreign Key(CustomerID) references Customer(CustomerID),
+Foreign Key(ServiceType, HotelID) references Breakfast(BreakfastType, HotelID)
+);

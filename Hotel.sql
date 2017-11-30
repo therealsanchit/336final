@@ -77,8 +77,7 @@ CustomerID int NOT NULL AUTO_INCREMENT,
 Email varchar(50) NOT NULL,
 Address varchar(50) NOT NULL,
 PhoneNumber varchar(12) NOT NULL,
-`Password` varchar(20) NOT NULL,
-`Name` varchar(25) NOT NULL,
+Name varchar(25) NOT NULL,
 Primary Key(CustomerID)
 );
 
@@ -109,7 +108,7 @@ Foreign Key(RoomNumber, HotelID) references Room(RoomNumber, HotelID)
 
 DROP TABLE IF EXISTS Includes;
 CREATE TABLE Includes(
-BreakfastType varchar(50),
+BreakfastType varchar(50) NOT NULL,
 HotelID int NOT NULL,
 InvoiceNumber int NOT NULL,
 Primary Key(BreakfastType, HotelID, InvoiceNumber),
@@ -119,7 +118,7 @@ Foreign Key(BreakfastType, HotelID) references Breakfast(BreakfastType, HotelID)
 
 DROP TABLE IF EXISTS `Contains`;
 CREATE TABLE `Contains`(
-ServiceType varchar(50),
+ServiceType varchar(50) NOT NULL,
 HotelID int NOT NULL,
 InvoiceNumber int NOT NULL,
 Primary Key(ServiceType, HotelID, InvoiceNumber),

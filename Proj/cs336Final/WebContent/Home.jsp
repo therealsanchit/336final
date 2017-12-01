@@ -31,7 +31,7 @@ Log in Here:
 First time customers, Register here:
 <br>	
 
-	<form method = "get" action = "customerRegister.jsp">
+	<form method = "get" action = "./Registration/customerRegister.jsp">
 		<input type = "submit" value="Register">
 	</form>
 	

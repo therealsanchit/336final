@@ -37,7 +37,7 @@
 			//make a column
 			out.print("<td>");
 			//print out column header
-			out.print("CustomerID");
+			out.print("ID");
 			out.print("</td>");
 			
 			out.print("<td>");

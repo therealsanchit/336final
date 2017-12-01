@@ -8,7 +8,7 @@
 </head>
 <body>
 
-Registration error(s): *not counting whitespaces
+Registration error(s):
 <br/>	
 <br/>
 	<%
@@ -29,12 +29,12 @@ Registration error(s): *not counting whitespaces
 		if(errors[4].equals("-1")){
 			out.write("Password has: to be atleast 5 letters <br/> <br/>");
 		}
-
-			%>
+	%>
+	
 <br/>
 Register again: 
-<form method = "get" action = "./Registration/customerRegister.jsp">
+<form method = "get" action = "./customerRegister.jsp">
 		<input type = "submit" value="Register">
-	</form>
+</form>
 </body>
 </html>

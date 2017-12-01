@@ -76,7 +76,7 @@ CREATE TABLE Customer(
 CustomerID int NOT NULL AUTO_INCREMENT,
 Email varchar(50) NOT NULL,
 Address varchar(50) NOT NULL,
-PhoneNumber varchar(12) NOT NULL,
+PhoneNumber varchar(20) NOT NULL,
 `Password` varchar(20) NOT NULL,
 `Name` varchar(25) NOT NULL,
 Primary Key(CustomerID)

@@ -15,15 +15,17 @@ Primary Key(HotelID)
 );
 
 DROP TABLE IF EXISTS HotelPhones;
+
 CREATE TABLE HotelPhones(
-PhoneId int NOT NULL AUTO_INCREMENT,
-PhoneNumber varchar(12) NOT NULL,
-HotelID int NOT NULL,
-Primary Key(PhoneId, HotelID),
-Foreign Key(HotelID) references Hotel(HotelID)
+	PhoneId int NOT NULL AUTO_INCREMENT,
+	PhoneNumber varchar(12) NOT NULL,
+	HotelID int NOT NULL,
+	Primary Key(PhoneId, HotelID),
+	Foreign Key(HotelID) references Hotel(HotelID)
 );
 
 DROP TABLE IF EXISTS ROOM;
+
 CREATE TABLE Room(
 RoomNumber int NOT NULL,
 HotelID int NOT NULL,
@@ -41,6 +43,7 @@ Foreign Key(HotelID) references Hotel(HotelID)
 
 
 DROP TABLE IF EXISTS Breakfast;
+
 CREATE TABLE Breakfast(
 BreakfastType varchar(50) NOT NULL DEFAULT '0',
 BreakfastDescription varchar(50),
@@ -52,6 +55,7 @@ Foreign Key(HotelID) references Hotel(HotelID)
 
 
 DROP TABLE IF EXISTS Service;
+
 CREATE TABLE Service(
 ServiceType varchar(50) NOT NULL DEFAULT '0',
 ServicePrice int,
@@ -61,6 +65,7 @@ Foreign Key(HotelID) references Hotel(HotelID)
 );
 
 DROP TABLE IF EXISTS CreditCard;
+
 CREATE TABLE CreditCard(
 CardNumber varchar(16) NOT NULL,
 BillingAddress varchar(50) NOT NULL,
@@ -72,6 +77,7 @@ Primary Key(CardNumber)
 );
 
 DROP TABLE IF EXISTS Customer;
+
 CREATE TABLE Customer(
 CustomerID int NOT NULL AUTO_INCREMENT,
 Email varchar(50) NOT NULL,
@@ -83,6 +89,7 @@ Primary Key(CustomerID)
 );
 
 DROP TABLE IF EXISTS Reservation;
+
 CREATE TABLE Reservation(
 InvoiceNumber int NOT NULL AUTO_INCREMENT,
 ReservationDate DATE NOT NULL,
@@ -95,6 +102,7 @@ Foreign Key(CustomerID) references Customer(CustomerID)
 );
 
 DROP TABLE IF EXISTS Reserves;
+
 CREATE TABLE Reserves(
 OutDate date NOT NULL,
 InDate date NOT NULL,
@@ -108,6 +116,7 @@ Foreign Key(RoomNumber, HotelID) references Room(RoomNumber, HotelID)
 );
 
 DROP TABLE IF EXISTS Includes;
+
 CREATE TABLE Includes(
 BreakfastType varchar(50),
 HotelID int NOT NULL,
@@ -118,6 +127,7 @@ Foreign Key(BreakfastType, HotelID) references Breakfast(BreakfastType, HotelID)
 );
 
 DROP TABLE IF EXISTS `Contains`;
+
 CREATE TABLE `Contains`(
 ServiceType varchar(50),
 HotelID int NOT NULL,
@@ -129,6 +139,7 @@ Foreign Key(ServiceType, HotelID) references Service(ServiceType, HotelID)
 
 
 DROP TABLE IF EXISTS RoomReview; 
+
 CREATE TABLE RoomReview(
 ReviewID int NOT NULL,
 RoomNumber int NOT NULL,
@@ -144,6 +155,7 @@ Foreign Key(RoomNumber, HotelID) references Room(RoomNumber, HotelID)
 );
 
 DROP TABLE IF EXISTS BreakfastReview;
+
 CREATE TABLE BreakfastReview(
 ReviewID int NOT NULL,
 BreakfastType varchar(50) NOT NULL,
@@ -159,6 +171,7 @@ Foreign Key(BreakfastType, HotelID) references Breakfast(BreakfastType, HotelID)
 );
 
 DROP TABLE IF EXISTS ServiceReview;
+
 CREATE TABLE ServiceReview(
 ReviewID int NOT NULL,
 ServiceType varchar(50) NOT NULL,
@@ -170,5 +183,5 @@ CHECK (Rating >= 0),
 CustomerID int NOT NULL,
 Primary Key(ReviewID, ServiceType, HotelID),
 Foreign Key(CustomerID) references Customer(CustomerID),
-Foreign Key(ServiceType, HotelID) references Breakfast(BreakfastType, HotelID)
+Foreign Key(ServiceType, HotelID) references Service(ServiceType, HotelID)
 );

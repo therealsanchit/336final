@@ -283,9 +283,21 @@ INSERT INTO HotelDatabase.ServiceReview VALUES
 (27, 'Parking', 1, 10, 'xxxxxx', 7),
 (28, 'Laundry', 1, 8, 'xxxxxx', 7);
 
-
-
-
+INSERT INTO HotelDatabase.RoomReview VALUES
+(1, 100, 1, 10, 'xxxxxxxx', 2),
+(2, 100, 3, 9, 'xxxxx', 2),
+(3, 101, 4, 8, 'xxxxxx', 1),
+(4, 11, 2, 7, 'xxxx', 1),
+(5, 12, 2, 6, 'xxxxxx', 1),
+(6, 200, 4, 5, 'xxxxx', 8),
+(7, 200, 4, 4, 'xxxxxx', 9),
+(8, 18, 2, 3, 'xxxxxx', 3),
+(9, 201, 3, 2, 'xxxxxxx', 4),
+(10, 202, 3, 1, 'xxxxxxxx', 5),
+(11, 206, 3, 9.5, 'xxxxx', 6),
+(12, 18, 2, 8.5, 'xxxxxx', 6),
+(13, 301, 1, 7.5, 'xxxxxxxxx', 7),
+(14, 202, 1, 6.5, 'xxxxx', 7);
 
 
 

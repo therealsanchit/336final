@@ -23,13 +23,6 @@
 		int endmonth = Integer.parseInt(request.getParameter("endmonth").trim());
 		int endday = Integer.parseInt(request.getParameter("endday").trim());
 		int endyear = Integer.parseInt(request.getParameter("endyear").trim());
-		
-		/*int startmonth = 0;
-		int startday = 0;
-		int startyear = 0;
-		int endmonth = 0;
-		int endday = 0;
-		int endyear = 0;*/
 
 		boolean error = false;
 		String[] statisticCheck = new String[3];
@@ -98,52 +91,82 @@
 			response.sendRedirect("statisticErr.jsp");
 		} else {
 			
-			response.sendRedirect("showStatistic.jsp");
+			List<String> list = new ArrayList<String>();
 
-			/*String emailChecker = "SELECT * FROM Customer WHERE Email=?";
-			PreparedStatement check = con.prepareStatement(emailChecker);
+			try {
 
-			check.setString(1, email);
+				
+				
+				Statement queryStatement = con.createStatement();
+				
+				String getStat1 = "SELECT temptable3.HotelID, temptable3.RoomType, avg(temptable3.Rating) AS AvgRating FROM(" +
+					"SELECT RoomReview.HotelID, Room.RoomType, RoomReview.Rating, Reserves.InDate, Reserves.Outdate " +
+					"FROM RoomReview, Reserves, Reservation, Room " +
+					"WHERE RoomReview.HotelID = Room.HotelID AND RoomReview.RoomNumber = Room.RoomNumber AND " +
+					"RoomReview.CustomerID = Reservation.CustomerID AND Reserves.InvoiceNumber = Reservation.InvoiceNumber AND " +
+					"Reserves.HotelID = Room.HotelID AND Reserves.RoomNumber = Room.RoomNumber ";
+				
+				String startDate = Integer.toString(startyear) + "/" + Integer.toString(startmonth) + "/" + Integer.toString(startday);
+				String endDate =  Integer.toString(endyear) + "/" + Integer.toString(endmonth) + "/" + Integer.toString(endday);
+				
+				String dateSelector = "AND Reserves.OutDate between '" + startDate + "' and '" + endDate + "') temptable3 GROUP BY HotelID, RoomType";
+				
+				getStat1 = getStat1 + dateSelector;
+				
+				ResultSet result = queryStatement.executeQuery(getStat1);
+				
+				out.print("Highest rated room types for each hotel for the selected time period:");
+				out.print("<p></p>");
+				
+				out.print("<table>");
 
-			ResultSet result = check.executeQuery();
-			int i = 0;
-			if (result.next()) {
-				response.sendRedirect("./customerDuplicateEmail.jsp");
+				//make a row
+				out.print("<tr>");
+				//make a column
+				out.print("<td>");
+				//print out column header
+				out.print("HotelID");
+				out.print("</td>");
+				
+				out.print("<td>");
+					out.print("RoomType");
+				out.print("</td>");
+				
+				out.print("<td>");
+					out.print("AvgRating");
+				out.print("</td>");
+			
+				
+				while (result.next()) {
+					out.print("<tr>");
+					
+					out.print("<td>");
+					out.print(result.getString("HotelID"));
+					out.print("</td>");
+					
+					out.print("<td>");
+					out.print(result.getString("RoomType"));
+					out.print("</td>");
+					
+					out.print("<td>");
+					out.print(result.getString("AvgRating"));
+					out.print("</td>");
+					
+					out.print("</tr>");
+
+				}
+				out.print("</table>");
+
+				con.close();
+
+			} catch (Exception e) {
+				
 			}
-
-			else {
-				String insert = "INSERT INTO Customer(Email, Address, PhoneNumber, Password, Name)"
-						+ "VALUES (?, ?, ?, ?, ?)";
-
-				PreparedStatement ps = con.prepareStatement(insert);
-
-				ps.setString(1, email);
-				ps.setString(2, address);
-				ps.setString(3, phone);
-				ps.setString(4, password);
-				ps.setString(5, name);
-
-				ps.executeUpdate();
-			}*/
 		}
 	%>
 	Thank you for registering, Please login here:
 	<br>
-	<form method="get" action="../Login/customerLogin.jsp">
-		<table>
-			<tr>
-				<td>Email Address</td>
-				<td><input type="text" name="customerEmail"></td>
-			</tr>
-
-			<tr>
-				<td>Password</td>
-				<td><input type="text" name="customerPassword"></td>
-			</tr>
-
-		</table>
-		<br> <input type="submit" value="Login">
-	</form>
+	
 
 	<form method="get" action="../showStatistic.jsp" enctype=text/plain>
 		<input type="submit" value="Check database">

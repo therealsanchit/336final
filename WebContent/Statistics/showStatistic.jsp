@@ -35,7 +35,8 @@
 			
 			ResultSet result = queryStatement.executeQuery(getStat1);
 			
-			
+			out.print("Highest rated room types for each hotel for the selected time period:");
+			out.print("<p></p>");
 			
 			out.print("<table>");
 

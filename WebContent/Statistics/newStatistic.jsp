@@ -97,6 +97,8 @@
 			session.setAttribute("errors", statisticCheck);
 			response.sendRedirect("statisticErr.jsp");
 		} else {
+			
+			response.sendRedirect("showStatistic.jsp");
 
 			/*String emailChecker = "SELECT * FROM Customer WHERE Email=?";
 			PreparedStatement check = con.prepareStatement(emailChecker);
@@ -143,7 +145,7 @@
 		<br> <input type="submit" value="Login">
 	</form>
 
-	<form method="get" action="../show.jsp" enctype=text/plain>
+	<form method="get" action="../showStatistic.jsp" enctype=text/plain>
 		<input type="submit" value="Check database">
 	</form>
 

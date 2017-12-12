@@ -10,7 +10,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form method="get" action="../Statistics/selectStatistic.jsp">
 
 	<%
 		String url = "jdbc:mysql://dbinstance336.cetrc28mqdpc.us-east-2.rds.amazonaws.com:3306/HotelDatabase";
@@ -34,6 +33,9 @@
 
 		boolean error = false;
 		String[] statisticCheck = new String[3];
+		statisticCheck[0] = "1";
+		statisticCheck[1] = "1";
+		statisticCheck[2] = "1";
 		
 		//error[0] = start date not valid
 		//error[1] = end date not valid
@@ -123,7 +125,7 @@
 			}*/
 		}
 	%>
-	Thank you for registering, Please login here:</form>
+	Thank you for registering, Please login here:
 	<br>
 	<form method="get" action="../Login/customerLogin.jsp">
 		<table>

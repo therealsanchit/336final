@@ -45,7 +45,7 @@
 		}
 		else if (startmonth==2){
 			//only 27 days
-			if (startday >27){
+			if (startday >28){
 				statisticCheck[0] = "-1";
 				error = true;
 			}
@@ -60,7 +60,7 @@
 		}
 		else if (endmonth==2){
 			//only 27 days
-			if (endmonth > 27){
+			if (endday > 28){
 				statisticCheck[1] = "-1";
 				error = true;
 			}

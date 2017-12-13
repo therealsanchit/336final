@@ -21,7 +21,9 @@
 		float bRating = Float.valueOf(request.getParameter("bRating"));
 		String bComment = request.getParameter("bComment");
 		
-
+		String customerID = (String)session.getAttribute("customerID");
+		int cid = Integer.parseInt(customerID);
+		
 		boolean error = false;
 		String[] breakfastCheck = new String[3];
 
@@ -45,19 +47,7 @@
 		if (error == true) {
 			response.sendRedirect("breakfastReview");
 		} else {
-			
-			// FINALCID VARIABLE NEEDS TO PULL FROM customerLogin.jsp FORM TO GET THE CUSTOMER ID
-			// BELOW
-			// USES THAT CUSTOMER ID TO INSERT INTO THE DATABASE
-			// WITHOUT IT A FOREIGN KEY CONTRAINT FAILS
-			// I added a system.print.ln so if it prints null in the console you didn't pass the value properly
-			
-			String finalcid = request.getParameter("cid");
-			int finalcidint = Integer.parseInt(finalcid.trim());
-			
-			System.out.println(finalcidint);
-			
-				
+					
 				String insert = "INSERT INTO BreakfastReview(BreakfastType, HotelID, Rating, TextComment, CustomerID)"
 					+ "VALUES (?, ?, ?, ?, ?)";
 
@@ -69,7 +59,7 @@
 				ps.setInt(2, hotelID);
 				ps.setFloat(3, bRating);
 				ps.setString(4, bComment);
-				ps.setInt(5, finalcidint);
+				ps.setInt(5, cid);
 				
 
 				ps.executeUpdate();

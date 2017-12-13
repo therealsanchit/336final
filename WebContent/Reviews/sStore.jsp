@@ -21,7 +21,9 @@
 		float sRating = Float.valueOf(request.getParameter("sRating"));
 		String sComment = request.getParameter("sComment");
 		
-
+		String customerID = (String)session.getAttribute("customerID");
+		int cid = Integer.parseInt(customerID);
+		
 		boolean error = false;
 		String[] serviceCheck = new String[3];
 
@@ -45,6 +47,7 @@
 			response.sendRedirect("reviewError.jsp");
 		} else {
 				
+			System.out.println(cid);
 				
 				String insert = "INSERT INTO ServiceReview(ReviewID, ServiceType, HotelID, Rating, TextComment, CustomerID)"
 					+ "VALUES (?, ?, ?, ?, ?, ?)";
@@ -53,7 +56,6 @@
 			
 				int reviewID=10;
 				int hotelID =7;
-				int customerID=7;
 
 
 				ps.setInt(1, reviewID);
@@ -61,7 +63,7 @@
 				ps.setInt(3, hotelID);
 				ps.setFloat(4, sRating);
 				ps.setString(5, sComment);
-				ps.setInt(6, customerID);
+				ps.setInt(6, cid);
 
 				ps.executeUpdate();
 				

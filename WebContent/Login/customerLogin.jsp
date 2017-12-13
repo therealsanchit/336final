@@ -40,21 +40,13 @@
 		sqlQuery.setString(2, password);
 		
 		result = sqlQuery.executeQuery();
-		String cidcid;
+		String cid;
 		
-		while(result.next()){
-			cidcid = result.getString("CustomerID");
-			System.out.println(cidcid); %>
-			
-			 <form method="POST" action="bStore.jsp">
-			 <input type="hidden" name="cid" value="<%= cidcid %>" />
-			 </form>
-<%
-			
-			
-			response.sendRedirect("../Reviews/breakfastReview.jsp");
+		if(result.next()){
+			cid = result.getString("CustomerID");
+			session.setAttribute("customerID", cid);
+			response.sendRedirect("showOptions.jsp");						
 		}
-
-		%>
+%>
 </body>
 </html>

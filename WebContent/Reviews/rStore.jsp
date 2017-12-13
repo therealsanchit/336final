@@ -16,7 +16,9 @@
 		String url = "jdbc:mysql://dbinstance336.cetrc28mqdpc.us-east-2.rds.amazonaws.com:3306/HotelDatabase";
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection con = DriverManager.getConnection(url, "group22", "group22password");
-
+		String customerID = (String)session.getAttribute("customerID");
+		int cid = Integer.parseInt(customerID);
+		
 		int rNum = Integer.parseInt(request.getParameter("rNum"));
 		float rRating = Float.valueOf(request.getParameter("rRating"));
 		String rComment = request.getParameter("rComment");

@@ -141,7 +141,7 @@ Foreign Key(ServiceType, HotelID) references Service(ServiceType, HotelID)
 DROP TABLE IF EXISTS RoomReview; 
 
 CREATE TABLE RoomReview(
-ReviewID int NOT NULL,
+ReviewID int NOT NULL AUTO_INCREMENT,
 RoomNumber int NOT NULL,
 HotelID int Not NULL,
 Rating float NOT NULL,
@@ -157,7 +157,7 @@ Foreign Key(RoomNumber, HotelID) references Room(RoomNumber, HotelID)
 DROP TABLE IF EXISTS BreakfastReview;
 
 CREATE TABLE BreakfastReview(
-ReviewID int NOT NULL,
+ReviewID int NOT NULL AUTO_INCREMENT,
 BreakfastType varchar(50) NOT NULL,
 HotelID int Not NULL,
 Rating float NOT NULL,
@@ -173,7 +173,7 @@ Foreign Key(BreakfastType, HotelID) references Breakfast(BreakfastType, HotelID)
 DROP TABLE IF EXISTS ServiceReview;
 
 CREATE TABLE ServiceReview(
-ReviewID int NOT NULL,
+ReviewID int NOT NULL AUTO_INCREMENT,
 ServiceType varchar(50) NOT NULL,
 HotelID int Not NULL,
 Rating float NOT NULL,

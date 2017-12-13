@@ -1,8 +1,14 @@
 INSERT INTO HotelDatabase.Hotel VALUES
-(1, '123 Phoenix St', 'Phoenix', 'AZ', 'United States', 12345),
-(2, '2 AnnArbor Ct', 'Ann Arbor', 'MI', 'United States', 92834),
-(3, '100 College Ave', 'New Brunswick', 'NJ', 'United States', 08901),
-(4, '130 Jersey Rd', 'Trenton', 'NJ', 'United States', 09720);
+(1, 'Hotel 1', '123 Phoenix St', 'Phoenix', 'AZ', 'United States', 12345),
+(2, 'Hotel 2','2 AnnArbor Ct', 'Ann Arbor', 'MI', 'United States', 92834),
+(3, 'Hotel 3','100 College Ave', 'New Brunswick', 'NJ', 'United States', 08901),
+(4, 'Hotel 4','rd 1', 'banglore', 'MH', 'India', 09720),
+(5, 'Hotel 5','juhu', 'mumbai', 'MH', 'India', 04200),
+(6, 'Hotel 6','130 Jersey Rd', 'somechinesecity', 'somechinesestae', 'China', 08820),
+(7, 'Hotel 7','130 smoke all day', 'someothercity', 'Beijing', 'China', 01710),
+(8, 'Hotel 8','chinese road', 'shanghai', 'Beijing', 'China', 04720);
+
+
 
 INSERT INTO HotelDatabase.Room VALUES
 (100, 1, 250.25, 4, 1, '4 person basic room', 'double', '2017-01-02', '2017-01-20', 0.30),
@@ -76,7 +82,6 @@ INSERT INTO HotelDatabase.Service VALUES
 ('Laundry', 10, 1),
 ('Airport Shuttle', 35, 1),
 ('Massage', 60, 1),
-('Room Service', 30, 1),
 ('Parking', 10, 2),
 ('Laundry', 8, 2),
 ('Airport Shuttle', 20, 2),

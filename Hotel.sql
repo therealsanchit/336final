@@ -6,6 +6,7 @@ USE HotelDatabase;
 DROP TABLE IF EXISTS Hotel;
 CREATE TABLE Hotel (
 HotelID int NOT NULL AUTO_INCREMENT,
+`Name` varchar(50) NOT NULL, 
 Street varchar(30) NOT NULL,
 City varchar(30) NOT NULL,
 State varchar(30) NOT NULL,

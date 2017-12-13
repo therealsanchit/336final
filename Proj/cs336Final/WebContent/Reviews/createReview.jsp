@@ -27,8 +27,11 @@
 		else if(name.equals("Room") || name.equals("room")){
 			response.sendRedirect("roomReview.jsp");
 		}
-		//Else error
-		%>
+		else{
+			response.sendRedirect("reviewType.jsp");
+		}
+			
+			%>
 	
 
 </body>

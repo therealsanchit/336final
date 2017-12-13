@@ -14,7 +14,7 @@
 	<form method="post" action="createReview.jsp">
 	<table>
 	<tr>
-	<td>Review Type:</td><td><input type="text" name="review"></td>
+	<td>Review Type (Breakfast/Service/Room):</td><td><input type="text" name="review"></td>
 	</tr>
 	</table>
 	<br>

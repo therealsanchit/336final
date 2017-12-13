@@ -18,7 +18,7 @@
 		Connection con = DriverManager.getConnection(url, "group22", "group22password");
 
 		String bType = request.getParameter("bType");
-		String bRating = request.getParameter("bRating");
+		float bRating = Float.valueOf(request.getParameter("bRating"));
 		String bComment = request.getParameter("bComment");
 		
 
@@ -30,12 +30,12 @@
 			error = true;
 		} else
 			breakfastCheck[0] = "1";
-		
-		if (!(bRating.equals("1") || bRating.equals("2") || bRating.equals("3") || bRating.equals("4") || bRating.equals("5") || bRating.equals("6") || bRating.equals("7") || bRating.equals("8") || bRating.equals("9") || bRating.equals("10"))) {
-			breakfastCheck[1] = "-1";
-			error = true;
-		} else
-			breakfastCheck[1] = "1";
+		//
+		//if (!(bRating.equals("1") || bRating.equals("2") || bRating.equals("3") || bRating.equals("4") || bRating.equals("5") || bRating.equals("6") || bRating.equals("7") || bRating.equals("8") || bRating.equals("9") || bRating.equals("10"))) {
+			//breakfastCheck[1] = "-1";
+			//error = true;
+		//} else
+			//breakfastCheck[1] = "1";
 		if (bComment.trim().length() > 100) {
 			breakfastCheck[2] = "-1";
 			error = true;
@@ -45,18 +45,25 @@
 		if (error == true) {
 			response.sendRedirect("breakfastReview");
 		} else {
-
-				String insert = "INSERT INTO BreakfatReview(ReviewID, BreakfastType, HotelID, Rating, TextComment)"
-						+ "VALUES (?, ?, ?, ?, ?)";
+				
+				
+				String insert = "INSERT INTO BreakfastReview(ReviewID, BreakfastType, HotelID, Rating, TextComment)"
+					+ "VALUES (?, ?, ?, ?, ?)";
 
 				PreparedStatement ps = con.prepareStatement(insert);
-
-				ps.setString(1, "24204");
+			
+				int reviewID=10;
+				int hotelID=7;
+				
+				ps.setInt(1, reviewID);
 				ps.setString(2, bType);
-				ps.setString(3, "4243");
-				ps.setString(4, bRating);
+				ps.setInt(3, hotelID);
+				ps.setFloat(4, bRating);
 				ps.setString(5, bComment);
+
 				ps.executeUpdate();
+				
+				
 			}
 		
 	%>

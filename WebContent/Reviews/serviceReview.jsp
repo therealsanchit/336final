@@ -7,6 +7,22 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<br>
+	<form method="post" action="sStore.jsp">
+	<table>
+	<tr>
+	<td>Service Type:</td><td><input type="text" name="sType"></td>
+	</tr>
+	<tr>    
+	<td>Rating(Between 1-10):</td><td><input type="text" name="sRating"></td>
+	</tr>
+	<tr>    
+	<td>Comment:</td><td><input type="text" name="sComment"></td>
+	</tr>
+	</table>
+	<br>
+	<input type="submit" value="submit">
+	</form>
+<br>
 </body>
 </html>

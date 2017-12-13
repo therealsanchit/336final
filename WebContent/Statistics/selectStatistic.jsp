@@ -375,10 +375,10 @@ End Date:
 <p></p>
 Statistic: 
 <select name = "statoption">
-  <option value="stat1">Highest rated room type for each hotel</option>
-  <option value="stat2">Top 5 highest spending customers</option>
-  <option value="stat3">Highest rated breakfast across all hotels</option>
-  <option value="stat4">Highest rated service across all hotels</option>
+  <option value="1">Highest rated room type for each hotel</option>
+  <option value="2">Top 5 highest spending customers</option>
+  <option value="3">Highest rated breakfast across all hotels</option>
+  <option value="4">Highest rated service across all hotels</option>
 </select>
 
 

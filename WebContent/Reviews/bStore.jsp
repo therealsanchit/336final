@@ -45,21 +45,32 @@
 		if (error == true) {
 			response.sendRedirect("breakfastReview");
 		} else {
+			
+			// FINALCID VARIABLE NEEDS TO PULL FROM customerLogin.jsp FORM TO GET THE CUSTOMER ID
+			// BELOW
+			// USES THAT CUSTOMER ID TO INSERT INTO THE DATABASE
+			// WITHOUT IT A FOREIGN KEY CONTRAINT FAILS
+			// I added a system.print.ln so if it prints null in the console you didn't pass the value properly
+			
+			String finalcid = request.getParameter("cid");
+			int finalcidint = Integer.parseInt(finalcid.trim());
+			
+			System.out.println(finalcidint);
+			
 				
-				
-				String insert = "INSERT INTO BreakfastReview(ReviewID, BreakfastType, HotelID, Rating, TextComment)"
+				String insert = "INSERT INTO BreakfastReview(BreakfastType, HotelID, Rating, TextComment, CustomerID)"
 					+ "VALUES (?, ?, ?, ?, ?)";
 
 				PreparedStatement ps = con.prepareStatement(insert);
 			
-				int reviewID=10;
-				int hotelID=7;
+				int hotelID=4;
 				
-				ps.setInt(1, reviewID);
-				ps.setString(2, bType);
-				ps.setInt(3, hotelID);
-				ps.setFloat(4, bRating);
-				ps.setString(5, bComment);
+				ps.setString(1, bType);
+				ps.setInt(2, hotelID);
+				ps.setFloat(3, bRating);
+				ps.setString(4, bComment);
+				ps.setInt(5, finalcid);
+				
 
 				ps.executeUpdate();
 				

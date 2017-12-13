@@ -10,6 +10,9 @@
 </head>
 <body>
 
+
+
+
 	<% 
 		String url = "jdbc:mysql://dbinstance336.cetrc28mqdpc.us-east-2.rds.amazonaws.com:3306/HotelDatabase";
 		Class.forName("com.mysql.jdbc.Driver");
@@ -37,9 +40,19 @@
 		sqlQuery.setString(2, password);
 		
 		result = sqlQuery.executeQuery();
+		String cidcid;
 		
 		while(result.next()){
-			System.out.println(result.getString("CustomerID"));
+			cidcid = result.getString("CustomerID");
+			System.out.println(cidcid); %>
+			
+			 <form method="POST" action="bStore.jsp">
+			 <input type="hidden" name="cid" value="<%= cidcid %>" />
+			 </form>
+<%
+			
+			
+			response.sendRedirect("../Reviews/breakfastReview.jsp");
 		}
 
 		%>

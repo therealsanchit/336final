@@ -69,7 +69,7 @@
 				ps.setInt(2, hotelID);
 				ps.setFloat(3, bRating);
 				ps.setString(4, bComment);
-				ps.setInt(5, finalcid);
+				ps.setInt(5, finalcidint);
 				
 
 				ps.executeUpdate();

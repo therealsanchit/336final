@@ -17,38 +17,34 @@
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection con = DriverManager.getConnection(url, "group22", "group22password");
 
-		String bType = request.getParameter("bType");
-		float bRating = Float.valueOf(request.getParameter("bRating"));
-		String bComment = request.getParameter("bComment");
+		int rNum = Integer.parseInt(request.getParameter("rNum"));
+		float rRating = Float.valueOf(request.getParameter("rRating"));
+		String rComment = request.getParameter("rComment");
 		
 
 		boolean error = false;
-		String[] breakfastCheck = new String[3];
+		String[] roomCheck = new String[3];
 
-		if (bType.trim().length() > 50) {
-			breakfastCheck[0] = "-1";
+	
+		if (!(rRating>=0 && rRating<11)) {
+			roomCheck[1] = "-1";
 			error = true;
 		} else
-			breakfastCheck[0] = "1";
-		//
-		//if (!(bRating.equals("1") || bRating.equals("2") || bRating.equals("3") || bRating.equals("4") || bRating.equals("5") || bRating.equals("6") || bRating.equals("7") || bRating.equals("8") || bRating.equals("9") || bRating.equals("10"))) {
-			//breakfastCheck[1] = "-1";
-			//error = true;
-		//} else
-			//breakfastCheck[1] = "1";
-		if (bComment.trim().length() > 100) {
-			breakfastCheck[2] = "-1";
+			roomCheck[1] = "1";
+		if (rComment.trim().length() > 100) {
+			roomCheck[2] = "-1";
 			error = true;
 		} else
-			breakfastCheck[2] = "1";
+			roomCheck[2] = "1";
 		
 		if (error == true) {
-			response.sendRedirect("breakfastReview");
+			response.sendRedirect("roomReview");
 		} else {
 				
 				
-				String insert = "INSERT INTO BreakfastReview(ReviewID, BreakfastType, HotelID, Rating, TextComment)"
-					+ "VALUES (?, ?, ?, ?, ?)";
+			
+				String insert = "INSERT INTO RoomReview(ReviewID, Rating, TextComment)"
+					+ "VALUES (?, ?, ?)";
 
 				PreparedStatement ps = con.prepareStatement(insert);
 			
@@ -56,10 +52,10 @@
 				int hotelID=7;
 				
 				ps.setInt(1, reviewID);
-				ps.setString(2, bType);
-				ps.setInt(3, hotelID);
-				ps.setFloat(4, bRating);
-				ps.setString(5, bComment);
+				//ps.setInt(2, rNum);
+				//ps.setInt(3, hotelID);
+				ps.setFloat(2, rRating);
+				ps.setString(3, rComment);
 
 				ps.executeUpdate();
 				
@@ -67,6 +63,6 @@
 			}
 		
 	%>
-	Thank you for Breakfast Review!!!
+	Thank you for Room Review!!!
 </body>
 </html>

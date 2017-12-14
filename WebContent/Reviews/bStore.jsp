@@ -31,18 +31,22 @@
 		ResultSet result = sqlQuery.executeQuery();
 		
 		//Use the invoice number to get the hotelID
-		String hotelID2= "Select hotelID FROM Reserves WHERE InvoiceNumber=?";
+		String hotelID2= "Select hotelID as hID FROM Reserves WHERE InvoiceNumber=?";
 		PreparedStatement sqlQuery2 = con.prepareStatement(hotelID2);
 		sqlQuery2.setString(1, invoiceID);
 		ResultSet result2 = sqlQuery2.executeQuery();
-		int hotelID=Integer.parseInt(hotelID2); //Convert to an integer
+		try{
+		int hotelID=Integer.parseInt(hotelID2);//Convert to an integer
+		}catch(NumberFormatException ex){
+			response.sendRedirect("showOptions.jsp");
+		}
 		//Now we have the hotel ID from where the customer stayed
 
 		
-		String reviewID2= "Select Count(*) FROM BreakfastReview";
+		String reviewID2= "Select Count(*) as cnt FROM BreakfastReview";
 		PreparedStatement sqlQuery3 = con.prepareStatement(reviewID2);
 		ResultSet result3 = sqlQuery3.executeQuery();
-		int reviewID=Integer.parseInt(reviewID2); //Convert to an integer
+		int reviewID=result3.getInt("cnt"); //Convert to an integer
 		reviewID++;
 		
 		

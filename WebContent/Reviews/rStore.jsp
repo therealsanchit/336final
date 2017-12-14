@@ -34,8 +34,11 @@
 		PreparedStatement sqlQuery2 = con.prepareStatement(hotelID2);
 		sqlQuery2.setString(1, invoiceID);
 		ResultSet result2 = sqlQuery2.executeQuery();
-		
-		int hotelID=Integer.parseInt(hotelID2); //Convert to an integer
+		try{
+			int hotelID=Integer.parseInt(hotelID2);//Convert to an integer
+			}catch(NumberFormatException ex){
+				response.sendRedirect("showOptions.jsp");
+			}
 		
 		String reviewID2= "Select Count(*) FROM RoomReview";
 		PreparedStatement sqlQuery3 = con.prepareStatement(reviewID2);

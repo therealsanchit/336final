@@ -21,14 +21,17 @@
 
 		out.write("<br>");
 		ArrayList<String> roomType = new ArrayList<String>();
+		ArrayList<String> roomCost = new ArrayList<String>();
 		String getRooms = "Select * FROM Room where HotelID = ?";
 		PreparedStatement roomQuery = con.prepareStatement(getRooms);
 		roomQuery.setString(1, hid);
 		ResultSet result = roomQuery.executeQuery();
 
 		while (result.next()) {
-			if (!roomType.contains(result.getString("RoomType")))
+			if (!roomType.contains(result.getString("RoomType"))){
 				roomType.add(result.getString("RoomType"));
+				roomCost.add(result.getString("Price"));
+			}
 		}
 
 		out.write("<span>");
@@ -36,6 +39,8 @@
 		for (int i = 0; i < roomType.size(); i++) {
 			out.write("<option value = '" + i + "'>");
 			out.write(roomType.get(i));
+			out.write(", Cost: ");
+			out.write(roomCost.get(i));
 			out.write("</option>");
 		}
 		out.write("</select>");
@@ -177,11 +182,13 @@
 				serviceCost.add(result.getString("ServicePrice"));
 			}
 		}
+		
+		String serviceSize = Integer.toString(serviceType.size());
 
 		out.write("<fieldset>");
 		for (int i = 0; i < serviceType.size(); i++) {
-			out.write("<input type = 'radio' name = '" + serviceType.get(i) + "' id = '" + serviceType.get(i)
-					+ "' value = '" + serviceType.get(i) + "'/>");
+			out.write("<input type = 'radio' name = '" + serviceType.get(i) + "' id = '" + i
+					+ "' value = '" + serviceType.get(i) + " " + serviceCost.get(i) + "'/>");
 			out.write("<label for = '" + serviceType.get(i) + "'>");
 			out.write(serviceType.get(i));
 			out.write(", Costs: ");
@@ -206,10 +213,13 @@
 				breakfastCost.add(result.getString("BreakfastPrice"));
 			}
 		}
+		
+		String breakfastSize = Integer.toString(breakfastType.size());
+
 
 		out.write("<fieldset>");
 		for (int i = 0; i < breakfastType.size(); i++) {
-			out.write("<input type = 'text' name = '" + breakfastType.get(i) + "' id = '" + breakfastType.get(i)
+			out.write("<input type = 'text' name = '" + breakfastType.get(i) + " " + breakfastCost.get(i) + "' id = 'b" + i
 					+ "'/>");
 			out.write(breakfastType.get(i));
 			out.write(", Costs: ");
@@ -220,9 +230,64 @@
 		out.write("</fieldset>");
 	%>
 
-	<form method="post" action="giveReservationInformation.jsp">
-		<input type="submit" value="submit">
-	</form>
+	<INPUT TYPE="BUTTON" VALUE="Choose" ONCLICK="sendToResevationInfoPage()">
+			<script LANGUAGE="JavaScript">
+				function sendToResevationInfoPage(){
+										
+					var roomType = document.getElementById("roomSpan");
+					var selectedRoomType = roomType.options[roomType.selectedIndex].innerText;	
+					
+					var checkInMonth = document.getElementById("inMonth");
+					var selectedCheckInMonth = checkInMonth.options[checkInMonth.selectedIndex].value;
+
+					var checkInDay = document.getElementById("inDay");
+					var selectedCheckInDay = checkInDay.options[checkInDay.selectedIndex].innerText;
+
+					var checkInYear = document.getElementById("inYear");
+					var selectedCheckInYear = checkInYear.options[checkInYear.selectedIndex].innerText;	
+
+					var checkOutMonth = document.getElementById("outMonth");
+					var selectedCheckOutMonth = checkOutMonth.options[checkOutMonth.selectedIndex].value;
+
+					var checkOutDay = document.getElementById("outDay");
+					var selectedCheckOutDay = checkOutDay.options[checkOutDay.selectedIndex].innerText;
+
+					var checkOutYear = document.getElementById("outYear");
+					var selectedCheckOutYear = checkOutYear.options[checkOutYear.selectedIndex].innerText;
+
+					var serviceSize = '<%=serviceSize%>';
+					var selectedServices ='';
+					for(var i = 0; i< serviceSize; i++){
+						var service = (document.getElementById(i));
+							if(service.checked){
+								selectedServices += service.value;
+								selectedServices += ';';
+							}
+					}
+										
+					
+					var breakfastSize = '<%=breakfastSize%>';
+					var b = 'b';
+					var selectedBreakfast ='';
+					
+					for(i = 0; i < breakfastSize; i++){
+						var id = b+i;
+						var breakfast = (document.getElementById(id));
+							if(breakfast.value != '0'){
+								selectedBreakfast += (breakfast.name + " " + breakfast.value);
+								selectedBreakfast += ';';
+							}
+					}
+					
+					
+					window.location = "http://localhost:8080/cs336Final/Reservation/giveReservationInformation.jsp?roomType="
+						+ selectedRoomType + "&inDay=" + selectedCheckInDay + "&inMonth=" + selectedCheckInMonth +
+						"&inYear=" + selectedCheckInYear + "&outDay=" + selectedCheckOutDay + "&outMonth=" + selectedCheckOutMonth + "&outYear=" + 
+						selectedCheckOutYear + "&services=" + selectedServices + "&breakfast=" + selectedBreakfast;
+					
+					
+				}
+			</script>
 
 </body>
 </html>

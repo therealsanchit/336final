@@ -24,6 +24,30 @@
 		String customerID = (String)session.getAttribute("customerID");
 		int cid = Integer.parseInt(customerID);
 		
+		//Get invoice number for the customer
+		String invoiceID = "Select InvoiceNumber FROM Reservation WHERE CustomerID=?";
+		PreparedStatement sqlQuery = con.prepareStatement(invoiceID);
+		sqlQuery.setString(1, customerID);
+		ResultSet result = sqlQuery.executeQuery();
+		
+		//Use the invoice number to get the hotelID
+		String hotelID2= "Select hotelID FROM Reserves WHERE InvoiceNumber=?";
+		PreparedStatement sqlQuery2 = con.prepareStatement(hotelID2);
+		sqlQuery2.setString(1, invoiceID);
+		ResultSet result2 = sqlQuery2.executeQuery();
+		int hotelID=Integer.parseInt(hotelID2); //Convert to an integer
+		//Now we have the hotel ID from where the customer stayed
+
+		
+		String reviewID2= "Select Count(*) FROM BreakfastReview";
+		PreparedStatement sqlQuery3 = con.prepareStatement(reviewID2);
+		ResultSet result3 = sqlQuery3.executeQuery();
+		int reviewID=Integer.parseInt(reviewID2); //Convert to an integer
+		reviewID++;
+		
+		
+		
+		//Error checking for the user input
 		boolean error = false;
 		String[] breakfastCheck = new String[3];
 
@@ -32,12 +56,12 @@
 			error = true;
 		} else
 			breakfastCheck[0] = "1";
-		//
-		//if (!(bRating.equals("1") || bRating.equals("2") || bRating.equals("3") || bRating.equals("4") || bRating.equals("5") || bRating.equals("6") || bRating.equals("7") || bRating.equals("8") || bRating.equals("9") || bRating.equals("10"))) {
-			//breakfastCheck[1] = "-1";
-			//error = true;
-		//} else
-			//breakfastCheck[1] = "1";
+		
+		if (!(bRating>=0 && bRating<=10)) {
+			breakfastCheck[1] = "-1";
+			error = true;
+		} else
+			breakfastCheck[1] = "1";
 		if (bComment.trim().length() > 100) {
 			breakfastCheck[2] = "-1";
 			error = true;
@@ -49,21 +73,18 @@
 		} else {
 					
 				String insert = "INSERT INTO BreakfastReview(BreakfastType, HotelID, Rating, TextComment, CustomerID)"
-					+ "VALUES (?, ?, ?, ?, ?)";
+					+ "VALUES (?, ?, ?, ?, ?, ?)";
 
 				PreparedStatement ps = con.prepareStatement(insert);
-			
-				int hotelID=4;
 				
-				ps.setString(1, bType);
-				ps.setInt(2, hotelID);
-				ps.setFloat(3, bRating);
-				ps.setString(4, bComment);
-				ps.setInt(5, cid);
+				ps.setInt(1,reviewID);
+				ps.setString(2, bType);
+				ps.setInt(3, hotelID);
+				ps.setFloat(4, bRating);
+				ps.setString(5, bComment);
+				ps.setInt(6, cid);
 				
-
 				ps.executeUpdate();
-				
 				
 			}
 		

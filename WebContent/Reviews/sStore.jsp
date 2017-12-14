@@ -24,6 +24,25 @@
 		String customerID = (String)session.getAttribute("customerID");
 		int cid = Integer.parseInt(customerID);
 		
+		//Get invoice number for the customer
+		String invoiceID = "Select InvoiceNumber FROM Reservation WHERE CustomerID=?";
+		PreparedStatement sqlQuery = con.prepareStatement(invoiceID);
+		sqlQuery.setString(1, customerID);
+		ResultSet result = sqlQuery.executeQuery();
+		
+		//Use the invoice number to get the hotelID
+		String hotelID2= "Select hotelID FROM Reserves WHERE InvoiceNumber=?";
+		PreparedStatement sqlQuery2 = con.prepareStatement(hotelID2);
+		sqlQuery2.setString(1, invoiceID);
+		ResultSet result2 = sqlQuery2.executeQuery();
+		int hotelID=Integer.parseInt(hotelID2); //Convert to an integer
+		
+		String reviewID2= "Select Count(*) FROM ServiceReview";
+		PreparedStatement sqlQuery3 = con.prepareStatement(reviewID2);
+		ResultSet result3 = sqlQuery3.executeQuery();
+		int reviewID=Integer.parseInt(reviewID2); //Convert to an integer
+		reviewID++;
+		
 		boolean error = false;
 		String[] serviceCheck = new String[3];
 
@@ -44,7 +63,7 @@
 			serviceCheck[2] = "1";
 		
 		if (error == true) {
-			response.sendRedirect("reviewError.jsp");
+			response.sendRedirect("serviceReview.jsp");
 		} else {
 				
 			System.out.println(cid);
@@ -53,10 +72,6 @@
 					+ "VALUES (?, ?, ?, ?, ?, ?)";
 
 				PreparedStatement ps = con.prepareStatement(insert);
-			
-				int reviewID=10;
-				int hotelID =7;
-
 
 				ps.setInt(1, reviewID);
 				ps.setString(2, sType);

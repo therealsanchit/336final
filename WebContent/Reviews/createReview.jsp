@@ -18,13 +18,13 @@
 		Connection con = DriverManager.getConnection(url, "group22", "group22password");
 
 		String name = request.getParameter("review");
-		if(name.equals("Breakfast") || name.equals("breakfast")){
+		if(name.equals("1")){
 			response.sendRedirect("breakfastReview.jsp");
 		}
-		else if(name.equals("Service") || name.equals("service")){
+		else if(name.equals("2")){
 			response.sendRedirect("serviceReview.jsp");
 		}
-		else if(name.equals("Room") || name.equals("room")){
+		else if(name.equals("3")){
 			response.sendRedirect("roomReview.jsp");
 		}
 		else{

@@ -85,7 +85,7 @@
 				ps.setInt(6, cid);
 
 				ps.executeUpdate();
-				
+				response.sendRedirect("showOptions.jsp");
 				
 			}		
 	%>
